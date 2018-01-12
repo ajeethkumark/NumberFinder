@@ -81,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
                 {
                     if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
                      {
-                        ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+
+                         ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
 
                      }
                      else
@@ -161,6 +162,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        if(!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("insertData",false))
+        {
+            DataBaseHelper.getDataBaseHelperInstance(MainActivity.this).insertPermanentData(MainActivity.this);
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("valuesInsert",true).apply();
+        }
 
 
 

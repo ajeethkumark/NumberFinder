@@ -41,7 +41,7 @@ public class FinalResult extends AppCompatActivity {
         Bundle extras = i.getExtras();
         String tmp = extras.getString("value");
         showNumber.setText(tmp);
-        Cursor cursor=DataBaseHelper.getDataBaseHelperInstance(FinalResult.this).getParticular_db_Data(tmp,FinalResult.this);
+        Cursor cursor=DataBaseHelper.getDataBaseHelperInstance(FinalResult.this).getParticular_db_Data(tmp,FinalResult.this,"ImageData");
         if(cursor!=null && cursor.getCount()>0)
         {
            // Toast.makeText(FinalResult.this,"cursor not null",Toast.LENGTH_SHORT).show();
@@ -57,6 +57,19 @@ public class FinalResult extends AppCompatActivity {
         else
         {
             //Toast.makeText(FinalResult.this,"cursor is null",Toast.LENGTH_SHORT).show();
+        }
+        //PermanentData
+        cursor=DataBaseHelper.getDataBaseHelperInstance(FinalResult.this).getParticular_db_Data(tmp,FinalResult.this,"PermanentData");
+        if(cursor!=null && cursor.getCount()>0)
+        {
+            while(cursor.moveToNext())
+            {
+                if(Integer.parseInt(tmp)==cursor.getInt(cursor.getColumnIndexOrThrow("number")))
+                {
+                    afterData.append(cursor.getInt(cursor.getColumnIndexOrThrow("after_num")));
+                    afterData.append("//");
+                }
+            }
         }
         if(afterData!=null && afterData.length()>0)
         {

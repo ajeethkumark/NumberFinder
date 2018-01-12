@@ -22,6 +22,11 @@
         android:text="Scan Image"
         />
         <Button
+            android:id="@+id/upload_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Import Image"/>
+        <Button
             android:id="@+id/clear_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,11 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="view Captured"/>
-        <Button
-            android:id="@+id/upload_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Import Image"/>
+
 
 
 

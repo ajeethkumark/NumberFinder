@@ -16,11 +16,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final int version=3;
     public static final String databaseName="ImageScanning.db";
     public static final String tableName="ImageData";
+    public static final String table2Name="PermanentData";
     public static final String col_1="num_id";
     public static final String col_2="table_id";
     public static final String col_3="number";
     public static final String col_4="before_num";
     public static final String col_5="after_num";
+    public static final String col_6="weight";
     Context context;
     DataBaseHelper dbh;
     SQLiteDatabase sqLiteDatabase;
@@ -38,11 +40,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
       //  Toast.makeText(context,"table created is called",Toast.LENGTH_SHORT).show();
         sqLiteDatabase.execSQL("create table "+tableName+ " ("+col_1+" INTEGER  PRIMARY KEY AUTOINCREMENT ,"+col_2+" INTEGER ,"+col_3+" INTEGER,"+col_4+" TEXT ,"+col_5+" TEXT)");
        // Toast.makeText(context,"table created",Toast.LENGTH_SHORT).show();
+        sqLiteDatabase.execSQL("create table "+table2Name+" ("+col_1+" INTEGER PRIMARY KEY AUTOINCREMENT,"+col_2+" INTEGER ,"+col_3+" INTEGER,"+col_5+" INTEGER,"+col_6+" )");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + tableName);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + table2Name);
         onCreate(sqLiteDatabase);
        // Toast.makeText(context,"table is droped",Toast.LENGTH_SHORT).show();
 
@@ -195,8 +199,72 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return  returnBuilder;
         }
         finally {
+
             closeConnection();
         }
+
+    }
+    public void insertPermanentData(Context context)
+    {
+        SQLiteDatabase sqLiteDatabase=openConnection(context);
+        ContentValues cv=new ContentValues();
+        cv.put(col_2, 1);
+        cv.put(col_3, 10);
+        cv.put(col_5, 20);
+        cv.put(col_6,9);
+        long result = this.sqLiteDatabase.insert(table2Name, null, cv);
+        cv.put(col_2, 1);
+        cv.put(col_3, 10);
+        cv.put(col_5, 30);
+        cv.put(col_6,9);
+         result = this.sqLiteDatabase.insert(table2Name, null, cv);
+        cv.put(col_2, 1);
+        cv.put(col_3, 10);
+        cv.put(col_5, 18);
+        cv.put(col_6,7);
+        result = this.sqLiteDatabase.insert(table2Name, null, cv);
+        cv.put(col_2, 1);
+        cv.put(col_3, 10);
+        cv.put(col_5, 24);
+        cv.put(col_6,5);
+        result = this.sqLiteDatabase.insert(table2Name, null, cv);
+        cv.put(col_2, 1);
+        cv.put(col_3, 10);
+        cv.put(col_5, 6);
+        cv.put(col_6,8);
+        result = this.sqLiteDatabase.insert(table2Name, null, cv);
+        cv.put(col_2, 1);
+        cv.put(col_3, 7);
+        cv.put(col_5, 14);
+        cv.put(col_6,9);
+        result = this.sqLiteDatabase.insert(table2Name, null, cv);
+        cv.put(col_2, 1);
+        cv.put(col_3, 7);
+        cv.put(col_5, 12);
+        cv.put(col_6,8);
+        result = this.sqLiteDatabase.insert(table2Name, null, cv);
+        cv.put(col_2, 1);
+        cv.put(col_3, 7);
+        cv.put(col_5, 27);
+        cv.put(col_6,9);
+        result = this.sqLiteDatabase.insert(table2Name, null, cv);
+        cv.put(col_2, 1);
+        cv.put(col_3, 7);
+        cv.put(col_5, 34);
+        cv.put(col_6,8);
+        result = this.sqLiteDatabase.insert(table2Name, null, cv);
+        cv.put(col_2, 1);
+        cv.put(col_3, 7);
+        cv.put(col_5, 34);
+        cv.put(col_6,8);
+        result = this.sqLiteDatabase.insert(table2Name, null, cv);
+        cv.put(col_2, 1);
+        cv.put(col_3, 7);
+        cv.put(col_5, 9);
+        cv.put(col_6,7);
+        result = this.sqLiteDatabase.insert(table2Name, null, cv);
+        closeConnection();
+
 
     }
     public boolean numberCheck(String no1,String no2)
@@ -231,13 +299,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             this.sqLiteDatabase.close();
         }
     }
-    public Cursor getParticular_db_Data(String value,Context context)
+    public Cursor getParticular_db_Data(String value,Context context,String tName)
     {
         if(sqLiteDatabase==null )
         {
             openConnection(context);
         }
-        Cursor cursor=sqLiteDatabase.rawQuery("select * from ImageData where number = "+Integer.parseInt(value)+" AND table_id=1",null);
+        Cursor cursor=sqLiteDatabase.rawQuery("select * from "+tName+" where number = "+Integer.parseInt(value)+" AND table_id=1",null);
 
         return cursor;
     }
