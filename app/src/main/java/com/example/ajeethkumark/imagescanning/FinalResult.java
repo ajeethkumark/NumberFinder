@@ -3,6 +3,7 @@ package com.example.ajeethkumark.imagescanning;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -43,6 +44,11 @@ public class FinalResult extends AppCompatActivity {
         String tmp = extras.getString("value");
         int flag=extras.getInt("flag");
         showNumber.setText(tmp);
+        ActionBar ab=getSupportActionBar();
+        if(ab!=null)
+        {
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
         if(flag==1){
             tableName="ImageData";
         }
@@ -108,6 +114,13 @@ public class FinalResult extends AppCompatActivity {
         DataBaseHelper.getDataBaseHelperInstance(FinalResult.this).closeConnection();
 
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        this.finish();
+        return true;
+    }
+
     public class MyNumberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     {
         int colorCheck[]={3,9,12,18,21,27,30,36,5,14,23,32,1,7,16,19,25,34};

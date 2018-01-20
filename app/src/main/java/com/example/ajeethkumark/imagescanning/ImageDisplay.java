@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -62,6 +63,11 @@ public class ImageDisplay extends AppCompatActivity {
          showTakenCameraNumber=(RecyclerView)findViewById(R.id.taken_camera_number_show_recycler);
         progressBar=(ProgressBar)findViewById(R.id.progress);
         button.setVisibility(View.GONE);
+        ActionBar ab=getSupportActionBar();
+        if(ab!=null)
+        {
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
         Intent i=getIntent();
        // ActivityCompat.requestPermissions(ImageDisplay.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},10);
         Bundle getData=getIntent().getExtras();
@@ -187,6 +193,13 @@ public class ImageDisplay extends AppCompatActivity {
         }
     });
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        this.finish();
+        return true;
+    }
+
     public class CurrentNumberShow extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     {
         StringBuilder sb;

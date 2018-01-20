@@ -22,6 +22,7 @@ public class PredictionNumber extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prediction_number);
         recyclerViewNumberList=(RecyclerView)findViewById(R.id.number_list);
+
         recyclerViewNumberList.setLayoutManager(new GridLayoutManager(this,5));
         MyAdapter adapter=new MyAdapter(36);
         recyclerViewNumberList.setAdapter(adapter);

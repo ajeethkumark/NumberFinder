@@ -2,6 +2,7 @@ package com.example.ajeethkumark.imagescanning;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -78,6 +79,7 @@ public class ManualDataEntryFragment extends Fragment {
         saveAnchor=v.findViewById(R.id.save_anchor);
         refreshAnchor=v.findViewById(R.id.refresh_anchor);
         prediction=(Button)v.findViewById(R.id.prediction);
+        saveFloatButton.setBackgroundColor(Color.parseColor("#0066ff"));
         saveFloatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,7 +95,8 @@ public class ManualDataEntryFragment extends Fragment {
                     {
                         emptyCount++;
                     }
-                    else {
+                    else
+                    {
                         e1[i]="-1";
                     }
                 }
@@ -115,6 +118,7 @@ public class ManualDataEntryFragment extends Fragment {
                             for (int i = 0; i < 25; i++) {
                                 value.add(Integer.parseInt(e1[i]));
                             }
+                            prediction.setVisibility(View.VISIBLE);
                             DataBaseHelper.getDataBaseHelperInstance(getContext()).insertManualData(getContext(), value);
                             Toast.makeText(getContext(), "Data Registered", Toast.LENGTH_LONG).show();
                             saveFloatButton.setVisibility(View.INVISIBLE);
@@ -138,34 +142,6 @@ public class ManualDataEntryFragment extends Fragment {
                 }
 
 
-              /* if(!e1[0].isEmpty() && !e2[0].isEmpty() && !e3[0].isEmpty() && !e4[0].isEmpty() && !e5[0].isEmpty() && !e6[0].isEmpty()
-                        && !e7[0].isEmpty() && !e8[0].isEmpty() && !e9[0].isEmpty() && !e10[0].isEmpty() && !e11[0].isEmpty() && !e12[0].isEmpty()
-                        && !e13[0].isEmpty() && !e14[0].isEmpty())
-                         {
-                        //if(ed1.getText())
-                           // Toast.makeText(getContext(),"clicked",Toast.LENGTH_LONG).show();
-                             if(numberCheck(e1[0]) && numberCheck(e2[0]) && numberCheck(e3[0]) && numberCheck(e4[0]) && numberCheck(e5[0]) && numberCheck(e6[0])
-                                     && numberCheck(e7[0]) && numberCheck(e8[0]) && numberCheck(e9[0]) && numberCheck(e10[0]) && numberCheck(e11[0])
-                                     && numberCheck(e12[0]) && numberCheck(e13[0]) && numberCheck(e14[0]))
-                                    {
-                                        value.clear();
-                                        value.add(Integer.parseInt(e1[0]));value.add(Integer.parseInt(e2[0]));value.add(Integer.parseInt(e3[0]));
-                                        value.add(Integer.parseInt(e4[0]));value.add(Integer.parseInt(e5[0]));value.add(Integer.parseInt(e6[0]));value.add(Integer.parseInt(e7[0]));
-                                        value.add(Integer.parseInt(e8[0]));value.add(Integer.parseInt(e9[0]));value.add(Integer.parseInt(e10[0]));value.add(Integer.parseInt(e11[0]));
-                                        value.add(Integer.parseInt(e13[0]));value.add(Integer.parseInt(e14[0]));
-                                        DataBaseHelper.getDataBaseHelperInstance(getContext()).insertManualData(getContext(),value);
-                                        Toast.makeText(getContext(),"Data Registered",Toast.LENGTH_LONG).show();
-                                        saveFloatButton.setVisibility(View.INVISIBLE);
-                                        saveAnchor.setVisibility(View.INVISIBLE);
-
-                                    }
-                             else{
-                                 Toast.makeText(getContext(),"Don't enter other than number",Toast.LENGTH_LONG).show();
-                             }
-                         }
-                else {
-                    Toast.makeText(getContext(),"Enter the all data",Toast.LENGTH_LONG).show();
-                }*/
             }
         });
         prediction.setOnClickListener(new View.OnClickListener() {
