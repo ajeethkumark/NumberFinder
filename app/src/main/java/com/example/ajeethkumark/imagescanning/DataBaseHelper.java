@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 /**
  * Created by Ajeethkumar k on 12/23/2017.
  */
@@ -17,6 +19,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String databaseName="ImageScanning.db";
     public static final String tableName="ImageData";
     public static final String table2Name="PermanentData";
+    public static final String table3Name="ManualData";
     public static final String col_1="num_id";
     public static final String col_2="table_id";
     public static final String col_3="number";
@@ -40,13 +43,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
       //  Toast.makeText(context,"table created is called",Toast.LENGTH_SHORT).show();
         sqLiteDatabase.execSQL("create table "+tableName+ " ("+col_1+" INTEGER  PRIMARY KEY AUTOINCREMENT ,"+col_2+" INTEGER ,"+col_3+" INTEGER,"+col_4+" TEXT ,"+col_5+" TEXT)");
        // Toast.makeText(context,"table created",Toast.LENGTH_SHORT).show();
-        sqLiteDatabase.execSQL("create table "+table2Name+" ("+col_1+" INTEGER PRIMARY KEY AUTOINCREMENT,"+col_2+" INTEGER ,"+col_3+" INTEGER,"+col_5+" INTEGER,"+col_6+" )");
+        sqLiteDatabase.execSQL("create table "+table2Name+" ("+col_1+" INTEGER PRIMARY KEY AUTOINCREMENT,"+col_2+" INTEGER ,"+col_3+" INTEGER,"+col_5+" INTEGER,"+col_6+" INTEGER)");
+        sqLiteDatabase.execSQL("create table "+table3Name+" ("+col_1+" INTEGER PRIMARY KEY AUTOINCREMENT,"+col_2+" INTEGER,"+col_3+" INTEGER,"+col_5+" INTEGER)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + tableName);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + table2Name);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + table3Name);
         onCreate(sqLiteDatabase);
        // Toast.makeText(context,"table is droped",Toast.LENGTH_SHORT).show();
 
@@ -203,6 +208,33 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             closeConnection();
         }
 
+    }
+    public void insertManualData(Context context, ArrayList<Integer> list)
+    {
+        SQLiteDatabase sqLiteDatabase=openConnection(context);
+        ContentValues cv=new ContentValues();
+        long result;
+        for(int i=0;i<list.size();i++) {
+            if (!(list.get(i) == -1)) {
+                if (i == 0) {
+                    cv.put(col_2, 1);
+                    cv.put(col_3, list.get(i));
+                    cv.put(col_5, -1);
+                    result = this.sqLiteDatabase.insert(table3Name, null, cv);
+                } else if (i != 0 && i != list.size() - 1) {
+                    cv.put(col_2, 1);
+                    cv.put(col_3, list.get(i));
+                    cv.put(col_5, list.get(i - 1));
+                    result = this.sqLiteDatabase.insert(table3Name, null, cv);
+                } else {
+                    cv.put(col_2, 1);
+                    cv.put(col_3, list.get(i));
+                    cv.put(col_5, list.get(i - 1));
+                    result = this.sqLiteDatabase.insert(table3Name, null, cv);
+                }
+            }
+        }
+        closeConnection();
     }
     public void insertPermanentData(Context context)
     {

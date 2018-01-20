@@ -182,6 +182,7 @@ public class ImageDisplay extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent i=new Intent(ImageDisplay.this,PredictionNumber.class);
+            i.putExtra("flag",1);
             startActivity(i);
         }
     });

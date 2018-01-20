@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 public class PredictionNumber extends AppCompatActivity {
     RecyclerView recyclerViewNumberList;
+    int flag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +25,9 @@ public class PredictionNumber extends AppCompatActivity {
         recyclerViewNumberList.setLayoutManager(new GridLayoutManager(this,5));
         MyAdapter adapter=new MyAdapter(36);
         recyclerViewNumberList.setAdapter(adapter);
-
+        Intent i=getIntent();
+        Bundle bundle=i.getExtras();
+        flag=bundle.getInt("flag");
     }
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
     {
@@ -112,6 +115,7 @@ public class PredictionNumber extends AppCompatActivity {
                 startActivity(i);*/
                 Intent i=new Intent(PredictionNumber.this,FinalResult.class);
                 i.putExtra("value",Integer.toString(getAdapterPosition()));
+                i.putExtra("flag",flag);
                 startActivity(i);
 
             }

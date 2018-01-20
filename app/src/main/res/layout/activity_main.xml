@@ -22,6 +22,11 @@
         android:text="Scan Image"
         />
         <Button
+            android:id="@+id/manual_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manual Data"/>
+        <Button
             android:id="@+id/upload_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

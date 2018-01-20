@@ -32,7 +32,7 @@ import static com.example.ajeethkumark.imagescanning.DataBaseHelper.tableName;
 
 
 public class MainActivity extends AppCompatActivity {
-    Button scanButton,clearButton,playButton,viewCapture,uploadImage;
+    Button scanButton,clearButton,playButton,viewCapture,uploadImage,manualData;
     int  CAMERA_PIC_REQUEST=0,SELECT_IMAGE=10;
     File imageFilePath;
     String path="hello";
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         playButton=(Button)findViewById(R.id.prediction);
         viewCapture=(Button)findViewById(R.id.viewCapture);
         uploadImage=(Button)findViewById(R.id.upload_image);
+        manualData=(Button)findViewById(R.id.manual_data);
         getSupportActionBar().setTitle("Roulette Table Scanner");
         Cursor res=DataBaseHelper.getDataBaseHelperInstance(MainActivity.this).getData(MainActivity.this);
         if(!(res.getCount()>0))
@@ -162,6 +163,13 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        manualData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(MainActivity.this,ManualDataEntry.class);
+                startActivity(i);
+            }
+        });
         if(!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("insertData",false))
         {
             DataBaseHelper.getDataBaseHelperInstance(MainActivity.this).insertPermanentData(MainActivity.this);
@@ -219,7 +227,6 @@ public class MainActivity extends AppCompatActivity {
                   //  i.putExtra("BitmapImage",image);
                     i.putExtra("filePath",path);
                     i.putExtra("flag",1);
-
                     startActivityForResult(i,90);
                     break;
                 }
@@ -278,6 +285,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
     public String getPath(Uri uri)
     {
         String[] projection = { MediaStore.Images.Media.DATA };

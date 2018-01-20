@@ -22,6 +22,7 @@ public class FinalResult extends AppCompatActivity {
     StringBuilder beforeData=new StringBuilder();
     RecyclerView recyclerAfterData,recyclerBeforData;
     MyNumberAdapter adapter;
+    String tableName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +41,15 @@ public class FinalResult extends AppCompatActivity {
         Intent i=getIntent();
         Bundle extras = i.getExtras();
         String tmp = extras.getString("value");
+        int flag=extras.getInt("flag");
         showNumber.setText(tmp);
-        Cursor cursor=DataBaseHelper.getDataBaseHelperInstance(FinalResult.this).getParticular_db_Data(tmp,FinalResult.this,"ImageData");
+        if(flag==1){
+            tableName="ImageData";
+        }
+        else {
+            tableName="ManualData";
+        }
+        Cursor cursor=DataBaseHelper.getDataBaseHelperInstance(FinalResult.this).getParticular_db_Data(tmp,FinalResult.this,tableName);
         if(cursor!=null && cursor.getCount()>0)
         {
            // Toast.makeText(FinalResult.this,"cursor not null",Toast.LENGTH_SHORT).show();
@@ -49,8 +57,10 @@ public class FinalResult extends AppCompatActivity {
             {
                 afterData.append(cursor.getString(cursor.getColumnIndexOrThrow("after_num")));
                 afterData.append("//");
-                beforeData.append(cursor.getString(cursor.getColumnIndexOrThrow("before_num")));
-                beforeData.append("//");
+                if(flag==1) {
+                    beforeData.append(cursor.getString(cursor.getColumnIndexOrThrow("before_num")));
+                    beforeData.append("//");
+                }
             }
             cursor=null;
         }
@@ -59,7 +69,7 @@ public class FinalResult extends AppCompatActivity {
             //Toast.makeText(FinalResult.this,"cursor is null",Toast.LENGTH_SHORT).show();
         }
         //PermanentData
-        cursor=DataBaseHelper.getDataBaseHelperInstance(FinalResult.this).getParticular_db_Data(tmp,FinalResult.this,"PermanentData");
+        /*cursor=DataBaseHelper.getDataBaseHelperInstance(FinalResult.this).getParticular_db_Data(tmp,FinalResult.this,"PermanentData");
         if(cursor!=null && cursor.getCount()>0)
         {
             while(cursor.moveToNext())
@@ -70,7 +80,7 @@ public class FinalResult extends AppCompatActivity {
                     afterData.append("//");
                 }
             }
-        }
+        }*/
         if(afterData!=null && afterData.length()>0)
         {
             //Toast.makeText(FinalResult.this,"after data not null",Toast.LENGTH_SHORT).show();
