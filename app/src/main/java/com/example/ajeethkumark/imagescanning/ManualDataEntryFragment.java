@@ -1,15 +1,21 @@
 package com.example.ajeethkumark.imagescanning;
 
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -17,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 /**
@@ -27,11 +34,17 @@ public class ManualDataEntryFragment extends Fragment {
     EditText[] ed=new EditText[25];
     TextView saveAnchor,refreshAnchor;
     FloatingActionButton saveFloatButton,refreshFloatbutton;
-    Button prediction;
+    final int[] cancelFlag = {0};
+    final int[] lastDataFlag = {0};
+    int[] userData;
+    int userDataReCheck[];
+    int hitCount=0;
     int emptyCount,numberCheckCount;
     Boolean flag;
     final String[] e1 = new String[25];
-
+    final ArrayList<Integer> value=new ArrayList<>();
+    CommunicationFragment cf;
+    View v;
     public ManualDataEntryFragment() {
         // Required empty public constructor
     }
@@ -40,14 +53,11 @@ public class ManualDataEntryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-
         //final int[] value=new int[14];
-        final ArrayList<Integer> value=new ArrayList<>();
 
         // Inflate the layout for this fragment
-        View v= inflater.inflate(R.layout.fragment_manual_data_entry, container, false);
+         v= inflater.inflate(R.layout.fragment_manual_data_entry, container, false);
+
         ed[0]=v.findViewById(R.id.ed_no1);
         ed[1]=v.findViewById(R.id.ed_no2);
         ed[2]=v.findViewById(R.id.ed_no3);
@@ -73,13 +83,13 @@ public class ManualDataEntryFragment extends Fragment {
         ed[22]=v.findViewById(R.id.ed_no23);
         ed[23]=v.findViewById(R.id.ed_no24);
         ed[24]=v.findViewById(R.id.ed_no25);
-
         saveFloatButton=v.findViewById(R.id.fab);
         refreshFloatbutton=v.findViewById(R.id.fab_refresh);
         saveAnchor=v.findViewById(R.id.save_anchor);
         refreshAnchor=v.findViewById(R.id.refresh_anchor);
-        prediction=(Button)v.findViewById(R.id.prediction);
+        existInfo();
         saveFloatButton.setBackgroundColor(Color.parseColor("#0066ff"));
+
         saveFloatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,6 +110,8 @@ public class ManualDataEntryFragment extends Fragment {
                         e1[i]="-1";
                     }
                 }
+                userData=new int[emptyCount];
+                userDataReCheck=new int[emptyCount];
                 if(emptyCount>=4)
                 {
                     numberCheckCount=1;
@@ -113,16 +125,23 @@ public class ManualDataEntryFragment extends Fragment {
                     }
                     if(numberCheckCount==1) {
                         if (numberRangeCheck()) {
-
+                            int j=0;
                             value.clear();
                             for (int i = 0; i < 25; i++) {
                                 value.add(Integer.parseInt(e1[i]));
                             }
-                            prediction.setVisibility(View.VISIBLE);
-                            DataBaseHelper.getDataBaseHelperInstance(getContext()).insertManualData(getContext(), value);
-                            Toast.makeText(getContext(), "Data Registered", Toast.LENGTH_LONG).show();
-                            saveFloatButton.setVisibility(View.INVISIBLE);
-                            saveAnchor.setVisibility(View.INVISIBLE);
+                            for(j=0;j<25;j++)
+                            {
+                                if(Integer.parseInt(e1[j])==-1)
+                                {
+                                    break;
+                                }
+                                userData[j]=Integer.parseInt(e1[j]);
+                                Log.d("userData",e1[j]);
+                            }
+                            showAlert(j);
+
+
                         }
                         else
                         {
@@ -144,14 +163,7 @@ public class ManualDataEntryFragment extends Fragment {
 
             }
         });
-        prediction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i=new Intent(getActivity(),PredictionNumber.class);
-                i.putExtra("flag",3);
-                startActivity(i);
-            }
-        });
+
         refreshFloatbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,11 +174,162 @@ public class ManualDataEntryFragment extends Fragment {
                {
                    ed[i].setText("");
                }
+               //ed[0].requestFocus();
             }
         });
 
         return v;
     }
+
+    private void existInfo() {
+        cf=(CommunicationFragment)getActivity();
+        cf.response(1);
+    }
+
+    private void showAlert(int j) {
+       final int temp;
+        temp=j;
+        AlertDialog.Builder builder1=new AlertDialog.Builder(getActivity());
+        builder1.setTitle("Please verify the order of winning numbers");
+        builder1.setMessage("Current winning number:"+e1[j-1]+"\n"+"previous winning number:"+e1[j-2]);
+        builder1.setCancelable(true);
+        builder1.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                                    cancelFlag[0]=0;
+                                    lastDataFlag[0]=0;
+                                    DataBaseHelper.getDataBaseHelperInstance(getContext()).insertManualData(getContext(), value);
+                                    Toast.makeText(getContext(), "Data Registered", Toast.LENGTH_LONG).show();
+                                    int a=hitResult("direct");
+                                    Log.d("HitReturnCheck.........",Integer.toString(a));
+                                    displayResult(temp);
+
+            }
+        });
+        builder1.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                                    AlertDialog.Builder builder2=new AlertDialog.Builder(getActivity());
+                                     builder2.setTitle("Please verify the order of winning numbers");
+                                     builder2.setMessage("Current winning number:"+e1[0]+"\n"+"previous winning number:"+e1[1]);
+                                    builder2.setCancelable(true);
+                                    builder2.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            lastDataFlag[0] =1;
+                                            cancelFlag[0]=0;
+                                            Collections.reverse(value);
+                                            DataBaseHelper.getDataBaseHelperInstance(getContext()).insertManualData(getContext(), value);
+                                            Toast.makeText(getContext(), "Data Registered", Toast.LENGTH_LONG).show();
+                                            displayResult(temp);
+                                        }
+                                    });
+                                    builder2.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                                            cancelFlag[0] =1;
+                                        }
+                                    });
+                                    AlertDialog alertDialog=builder2.create();
+                                    alertDialog.show();
+               // cancelFlag[0]=1;
+               // Toast.makeText(getActivity(),"No funtion available",Toast.LENGTH_LONG).show();
+
+            }
+        });
+        AlertDialog alertDialog=builder1.create();
+        alertDialog.show();
+    }
+    private int hitResult(String temp)
+    {
+        int[] reverseData=new int[emptyCount];
+        int j=0;
+        String temp2=temp;
+        for(int i=0;i<userDataReCheck.length;i++)
+        {
+            userDataReCheck[i]=0;
+        }
+        if(!(temp2.equals("direct")))
+        {
+           for(int i=userData.length;i>=0;i--,j++)
+           {
+               reverseData[j]=userData[i];
+           }
+           for(int i=0;i<userData.length;i++)
+           {
+               userData[i]=reverseData[i];
+           }
+           temp2="direct";
+        }
+        int flag=0;
+            if(temp2.equals("direct"))
+            {
+                for(int i=0;i<userData.length-1;i++)
+                {
+                    Cursor cursor=DataBaseHelper.getDataBaseHelperInstance(getContext()).getParticular_db_Data(Integer.toString(userData[i]),getContext(),"ImageData");
+                    if(cursor!=null && cursor.getCount()>0)
+                    {
+                        while (cursor.moveToNext()){
+
+
+                            if (userData[i + 1] == cursor.getInt(cursor.getColumnIndexOrThrow("after_num"))) {
+                                hitCount++;
+                                userDataReCheck[i] = 1;
+                               // flag=1;
+                            }
+
+                        }
+
+                    }
+                    if(userDataReCheck[i]!=1)
+                    {
+                        Cursor res = ManualDBHelper.getManualDBInstance(getContext()).getParticularData(getContext(), Integer.toString(userData[i]));
+                        if (res.getCount()>0 && res!=null)
+                        {
+                            while (res.moveToNext())
+                            {
+                                if(userData[i+1]==res.getInt(res.getColumnIndexOrThrow("aft_num")))
+                                {
+                                    hitCount++;
+                                }
+                            }
+                        }
+                    }
+
+                }
+                DataBaseHelper.getDataBaseHelperInstance(getContext()).closeConnection();
+                ManualDBHelper.getManualDBInstance(getContext()).closeConnection();
+            }
+            if(((hitCount%emptyCount)*100)>=20)
+                return 1;
+            else
+        return 0;
+    }
+
+
+    private void displayResult(int j) {
+        InputMethodManager inputManager = (InputMethodManager) getActivity()
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        inputManager.hideSoftInputFromWindow(v.getWindowToken(),0);
+        Bundle b=new Bundle();
+        if(lastDataFlag[0]==0) {
+            b.putString("value", e1[j - 1]);
+        }
+        else
+        {
+            b.putString("value",e1[0]);
+        }
+        b.putInt("flag",1);
+        b.putInt("dbData",1);
+        FinalResultFragment frf=new FinalResultFragment();
+        frf.setArguments(b);
+        if(cancelFlag[0] ==0) {
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.relative, frf).commit();
+        }
+    }
+
     private boolean numberRangeCheck()
     {
         for(int i=0;i<25;i++)

@@ -37,7 +37,7 @@ public class PredictionNumber extends AppCompatActivity {
         int colorFind;
         MyAdapter(int a)
         {
-            for(int i=0;i<=36;i++)
+            for(int i=0;i<=a;i++)
             {
                 value[i]=i;
             }
@@ -87,8 +87,6 @@ public class PredictionNumber extends AppCompatActivity {
         public int getItemCount() {
             return value.length;
         }
-
-
 
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

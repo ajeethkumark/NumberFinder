@@ -4,6 +4,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.ajeethkumark.imagescanning.ManualDataEntryFragment">
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,11 +18,14 @@
             android:layout_weight="2">
 
         </LinearLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8">
     <LinearLayout
         android:id="@+id/edittext_linear"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8"
+        android:layout_height="match_parent"
         android:orientation="vertical">
         <TextView
             android:id="@+id/detail_text"
@@ -37,36 +43,57 @@
              android:id="@+id/ed_no1"
           android:layout_width="0dp"
         android:layout_height="wrap_content"
+             android:inputType="number"
+             android:maxLines="1"
+             android:maxLength="2"
         android:layout_weight="1" />
         <EditText
             android:id="@+id/ed_no2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLines="1"
+            android:maxLength="2"
             android:layout_weight="1"/>
         <EditText
             android:id="@+id/ed_no3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLines="1"
+            android:maxLength="2"
             android:layout_weight="1"/>
         <EditText
             android:id="@+id/ed_no4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLines="1"
+            android:maxLength="2"
             android:layout_weight="1"/>
         <EditText
             android:id="@+id/ed_no5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLines="1"
+            android:maxLength="2"
             android:layout_weight="1"/>
         <EditText
             android:id="@+id/ed_no6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLines="1"
+            android:maxLength="2"
             android:layout_weight="1"/>
         <EditText
             android:id="@+id/ed_no7"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLines="1"
+            android:maxLength="2"
             android:layout_weight="1"/>
         </LinearLayout>
         <LinearLayout
@@ -80,36 +107,57 @@
                 android:id="@+id/ed_no8"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1"
+                android:maxLength="2"
                 android:layout_weight="1" />
             <EditText
                 android:id="@+id/ed_no9"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1"
+                android:maxLength="2"
                 android:layout_weight="1"/>
             <EditText
                 android:id="@+id/ed_no10"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1"
+                android:maxLength="2"
                 android:layout_weight="1"/>
             <EditText
                 android:id="@+id/ed_no11"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1"
+                android:maxLength="2"
                 android:layout_weight="1"/>
             <EditText
                 android:id="@+id/ed_no12"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1"
+                android:maxLength="2"
                 android:layout_weight="1"/>
             <EditText
                 android:id="@+id/ed_no13"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1"
+                android:maxLength="2"
                 android:layout_weight="1"/>
             <EditText
                 android:id="@+id/ed_no14"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1"
+                android:maxLength="2"
                 android:layout_weight="1"/>
 
         </LinearLayout>
@@ -125,36 +173,57 @@
                 android:id="@+id/ed_no15"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1"
+                android:maxLength="2"
                 android:layout_weight="1" />
             <EditText
                 android:id="@+id/ed_no16"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1"
+                android:maxLength="2"
                 android:layout_weight="1"/>
             <EditText
                 android:id="@+id/ed_no17"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1"
+                android:maxLength="2"
                 android:layout_weight="1"/>
             <EditText
                 android:id="@+id/ed_no18"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1"
+                android:maxLength="2"
                 android:layout_weight="1"/>
             <EditText
                 android:id="@+id/ed_no19"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1"
+                android:maxLength="2"
                 android:layout_weight="1"/>
             <EditText
                 android:id="@+id/ed_no20"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1"
+                android:maxLength="2"
                 android:layout_weight="1"/>
             <EditText
                 android:id="@+id/ed_no21"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1"
+                android:maxLength="2"
                 android:layout_weight="1"/>
         </LinearLayout>
         <LinearLayout
@@ -169,21 +238,34 @@
                 android:id="@+id/ed_no22"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLines="1"
+                android:maxLength="2"
                 android:layout_weight="1" />
             <EditText
                 android:id="@+id/ed_no23"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1"
+                android:maxLength="2"
                 android:layout_weight="1"/>
             <EditText
                 android:id="@+id/ed_no24"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1"
+                android:maxLength="2"
                 android:layout_weight="1"/>
             <EditText
                 android:id="@+id/ed_no25"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1"
+                android:maxLength="2"
                 android:layout_weight="1"/>
 
 
@@ -233,14 +315,12 @@
                 />
 
         </android.support.design.widget.CoordinatorLayout>
-        <Button
-            android:id="@+id/prediction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="prediction"
-            android:visibility="gone"
-            android:layout_gravity="center"/>
 
+
+
+
+    </LinearLayout>
+        </ScrollView>
 
 
 
@@ -248,6 +328,5 @@
 
 
 
-    </LinearLayout>
 
 </FrameLayout>

@@ -219,18 +219,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 if (i == 0) {
                     cv.put(col_2, 1);
                     cv.put(col_3, list.get(i));
-                    cv.put(col_5, -1);
+                    cv.put(col_5, list.get(i+1));
                     result = this.sqLiteDatabase.insert(table3Name, null, cv);
                 } else if (i != 0 && i != list.size() - 1) {
                     cv.put(col_2, 1);
                     cv.put(col_3, list.get(i));
-                    cv.put(col_5, list.get(i - 1));
+                    cv.put(col_5, list.get(i + 1));
+                    if(list.get(i+1)!=-1)
                     result = this.sqLiteDatabase.insert(table3Name, null, cv);
                 } else {
                     cv.put(col_2, 1);
                     cv.put(col_3, list.get(i));
                     cv.put(col_5, list.get(i - 1));
-                    result = this.sqLiteDatabase.insert(table3Name, null, cv);
+                    //result = this.sqLiteDatabase.insert(table3Name, null, cv);
                 }
             }
         }

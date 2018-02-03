@@ -41,7 +41,8 @@
         <activity android:name=".FinalResult" />
         <activity android:name=".PredictionNumber" />
         <activity android:name=".ViewCapture" />
-        <activity android:name=".ManualDataEntry"></activity>
+        <activity android:name=".ManualDataEntry"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

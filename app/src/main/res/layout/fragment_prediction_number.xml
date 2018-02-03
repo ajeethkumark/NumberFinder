@@ -1,0 +1,27 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.ajeethkumark.imagescanning.PredictionNumberFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/numberlist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+    </android.support.v7.widget.RecyclerView>
+    <Button
+        android:id="@+id/resetbutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberlist"
+        android:layout_marginTop="10dp"
+        android:textColor="#ffffff"
+        android:background="#000000"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="RESET DATA AND RETURN TO MAIN MENU"/>
+
+</RelativeLayout>
